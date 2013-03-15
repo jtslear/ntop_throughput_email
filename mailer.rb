@@ -13,6 +13,8 @@ class Mailer
   end
 
   def deliver
+    start_time = @epoch.the_start_time
+    end_time = @epoch.the_end_time
     mail = Mail.deliver do
       to SUPPORT_EMAIL
       from "Support <#{FROM_ADDRESS}>"
@@ -21,9 +23,9 @@ class Mailer
         content_type 'text/html; charset=UTF-8'
         body "  <p>The following graphs represent a 12 hour window, starting at 8AM to 8PM for the bandwidth of both of our T1 bundles.</p>
                 <p>Coporate Circuit (our internet and VPN connectivity):</p>
-                <img src=#{"http://10.1.1.230:3000/plugins/rrdPlugin?action=arbreq&which=graph&arbfile=throughput&arbiface=eth2&arbip=&start=#{@epoch.the_start_time}end=#{@epoch.the_end_time}&counter"}>
+                <img src=#{"http://10.1.1.230:3000/plugins/rrdPlugin?action=arbreq&which=graph&arbfile=throughput&arbiface=eth2&arbip=&start=#{start_time}&end=#{end_time}&counter=&title=Last+Business+Day+Throughput"}>
                 <p>Web Circuit (client facing websites):</p>
-                <img src=#{"http://10.1.1.230:3000/plugins/rrdPlugin?action=arbreq&which=graph&arbfile=throughput&arbiface=eth1&arbip=&start=#{@epoc.the_start_time}&end=#{@epoch.the_end_time}&counter"}> "
+                <img src=#{"http://10.1.1.230:3000/plugins/rrdPlugin?action=arbreq&which=graph&arbfile=throughput&arbiface=eth1&arbip=&start=#{start_time}&end=#{end_time}&counter=&title=Last+Business+Day+Throughput"}> "
       end
     end
   end
